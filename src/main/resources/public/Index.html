@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar WhatsApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #25D366;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #1da851;
+        }
+        #responseMessage {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Enviar WhatsApp</h2>
+    <form id="whatsappForm">
+<!--         <input type="text" id="phone" name="phone" required placeholder="Número (+51...)"> -->
+        <input type="text" id="message" name="message" required placeholder="Escribe tu mensaje">
+        <button onclick="sendMessage()">Enviar Mensaje</button>
+    </form>
+    <p id="responseMessage"></p>
+</div>
+
+<script>
+		
+		function sendMessage() {
+//             var phone = document.getElementById("phone").value;
+            var message = document.getElementById("message").value;
+
+            fetch("/UltraMsg-msj/send-whatsapp/send-fixed", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.text())
+            .then(data => alert("Mensaje enviado: " + data))
+            .catch(error => alert("Error: " + error));
+        }
+</script>
+
+</body>
+</html>
+
+
+
