@@ -51,6 +51,7 @@
     <form id="whatsappForm">
 <!--         <input type="text" id="phone" name="phone" required placeholder="Número (+51...)"> -->
         <input type="text" id="message" name="message" required placeholder="Escribe tu mensaje">
+        <input type="number" id="messageCount" name="messageCount" required placeholder="Cantidad de mensajes" min="1">
         <button onclick="sendMessage()">Enviar Mensaje</button>
     </form>
     <p id="responseMessage"></p>
@@ -61,11 +62,12 @@
 		function sendMessage() {
 //             var phone = document.getElementById("phone").value;
             var message = document.getElementById("message").value;
+            var messageCount = document.getElementById("messageCount").value;
 
             fetch("/UltraMsg-msj/send-whatsapp/send-fixed", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: message })
+                body: JSON.stringify({ message: message, count: messageCount })
             })
             .then(response => response.text())
             .then(data => alert("Mensaje enviado: " + data))

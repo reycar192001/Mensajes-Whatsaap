@@ -21,19 +21,21 @@ public class WhatsAppController {
     private static final Logger Logger = org.slf4j.LoggerFactory.getLogger(WhatsAppController.class);
 
     @PostMapping("/send-fixed")
-    public ResponseEntity<String> sendFixedMessages(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> sendFixedMessages(@RequestBody Map<String, String> request) {
         String message = request.get("message");
+        int count = Integer.parseInt(request.get("count"));
 
         List<String> phoneNumbers = Arrays.asList(
             "+51931053418",
-            "+51974778060"
+            "+51974778060",
+            "+51902275242"
         );
 
-        Logger.info("Enviando mensaje fijo: " + message + " a los números: " + phoneNumbers);
+        Logger.info("Enviando mensaje: '{}' a los números: {} ({} veces)", message, phoneNumbers, count);
 
-        ultraMsgService.sendMessages(phoneNumbers, message);
+        Map<String, Object> response = ultraMsgService.sendMessages(phoneNumbers, message, count);
 
-        return ResponseEntity.ok("Mensajes enviados a los números fijos");
+        return ResponseEntity.ok(response);
     }
 }
 
